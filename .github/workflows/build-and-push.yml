@@ -1,0 +1,49 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: ./travel-backend-main/travel-backend-main
+          file: ./travel-backend-main/travel-backend-main/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/travel-backend:latest
+            ghcr.io/${{ github.repository_owner }}/travel-backend:${{ github.sha }}
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: ./travel-frontend-main/travel-frontend-main
+          file: ./travel-frontend-main/travel-frontend-main/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/travel-frontend:latest
+            ghcr.io/${{ github.repository_owner }}/travel-frontend:${{ github.sha }}

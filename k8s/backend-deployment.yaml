@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
         - name: travel-backend
-          image: travel-backend:latest
-          imagePullPolicy: IfNotPresent
+          image: ghcr.io/KLU2300031103/travel-backend:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8081
           env:

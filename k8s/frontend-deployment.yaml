@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
         - name: travel-frontend
-          image: travel-frontend:latest
-          imagePullPolicy: IfNotPresent
+          image: ghcr.io/KLU2300031103/travel-frontend:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
 ---
