@@ -1,0 +1,18 @@
+name: Kubernetes YAML Lint
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  yamllint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run yamllint on k8s manifests
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          file_or_dir: k8s
+          strict: true
